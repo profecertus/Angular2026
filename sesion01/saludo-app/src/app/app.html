@@ -1,4 +1,10 @@
 <main>
-  <h2>Hola al mundo de Angular</h2>
-  <h3>Estoy siendo insertado desde el modulo</h3>
+  @if (libros$ | async; as libros){
+    @for(libro of libros; track libro.id){
+      <li>{{ libro.titulo }}</li>
+    }
+  }@else{
+      <p> Cargando Libros...</p>
+  }
+
 </main>
