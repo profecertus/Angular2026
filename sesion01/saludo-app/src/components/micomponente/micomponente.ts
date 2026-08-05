@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 interface Categoria{
   id:number;
@@ -12,7 +9,7 @@ interface Categoria{
 
 @Component({
   selector: 'app-micomponente',
-  imports: [MatButtonModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatSelectModule],
+  imports: [MatSidenavModule, MatListModule],
   templateUrl: './micomponente.html',
   styleUrl: './micomponente.css'
 })

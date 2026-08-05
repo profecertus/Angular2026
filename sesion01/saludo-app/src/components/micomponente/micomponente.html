@@ -1,32 +1,13 @@
-<!-- imports: [MatFormFieldModule, MatInputModule] -->
- <hr>
-<mat-form-field appearance="outline">
-    <mat-label>Nombres</mat-label>
-    <input matInput placeholder="Ej. DDD" />
-    <mat-hint>Maximo 80 caracteres</mat-hint>
-    <mat-error>El titulo es obligatorio</mat-error>
-</mat-form-field>
-
-<mat-form-field appearance="outline">
-    <mat-label>Apellidos</mat-label>
-    <input matInput placeholder="Ej. DDD" />
-    <mat-hint>Maximo 80 caracteres</mat-hint>
-    <mat-error>El titulo es obligatorio</mat-error>
-</mat-form-field>
-<!-- appearance: outline | fill -->
-
-<!-- imports: [MatFormFieldModule, MatSelectModule] -->
-<mat-form-field>
-<mat-label>Categoria</mat-label>
-<mat-select [(value)]="categoria" >
-    @for(c of categorias; track c.id) {
-        <mat-option [value]="c.id">{{ c.nombre }}</mat-option>
-    }
-</mat-select>
-</mat-form-field>
-
-<div class="grid">
-    @for (l of categorias; track l.id) { 
-        <h1>{{ l.nombre }}</h1>
-    }
-</div>
+sidenav.html
+<!-- imports: [MatSidenavModule, MatListModule] -->
+<mat-sidenav-container>
+<mat-sidenav #nav mode="side" opened>
+<mat-nav-list>
+<a mat-list-item routerLink="/inicio">Inicio</a>
+<a mat-list-item routerLink="/libros">Libros</a>
+</mat-nav-list>
+</mat-sidenav>
+<mat-sidenav-content>
+    
+</mat-sidenav-content>
+</mat-sidenav-container>
