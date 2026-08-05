@@ -5,8 +5,7 @@ import { LibroService } from '../shared/libro.service';
 @Component({
   selector: 'app-root',
   imports: [CommonModule],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  templateUrl: './app.html'
 })
 export class App {
   protected readonly title = signal('saludo-app');
