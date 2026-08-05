@@ -1,0 +1,14 @@
+<mat-form-field appearance="outline">
+    <mat-label>Titulo</mat-label>
+    <input matInput formControlName="titulo">
+    <mat-error>El titulo es obligatorio</mat-error>
+</mat-form-field>
+<br>
+<mat-form-field>
+    <mat-label>Categoria</mat-label>
+    <mat-select formControlName="categoria">
+        @for (c of categorias; track c.id) {
+            <mat-option [value]="c.id">{{ c.nombre }}</mat-option>
+        }
+    </mat-select>
+</mat-form-field>
