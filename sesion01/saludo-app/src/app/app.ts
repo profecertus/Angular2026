@@ -1,16 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
-import { LibroService } from '../shared/libro.service';
+import { Component, signal } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Micomponente } from '../components/micomponente/micomponente';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, Micomponente],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, Micomponente],
   templateUrl: './app.html'
 })
 export class App {
   protected readonly title = signal('saludo-app');
-  private librosSrv = inject(LibroService);
-  libros$=this.librosSrv.listar();
 }
-

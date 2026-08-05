@@ -1,13 +1,162 @@
-sidenav.html
-<!-- imports: [MatSidenavModule, MatListModule] -->
-<mat-sidenav-container>
-<mat-sidenav #nav mode="side" opened>
-<mat-nav-list>
-<a mat-list-item routerLink="/inicio">Inicio</a>
-<a mat-list-item routerLink="/libros">Libros</a>
-</mat-nav-list>
-</mat-sidenav>
-<mat-sidenav-content>
-    
-</mat-sidenav-content>
-</mat-sidenav-container>
+<div class="registro-container">
+  <mat-card class="registro-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar class="avatar-icon">person_add</mat-icon>
+      <mat-card-title>Crear Cuenta</mat-card-title>
+      <mat-card-subtitle>Completa el formulario para registrarte</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="registro-form">
+
+        <!-- Nombre y Apellido -->
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="field-half">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" placeholder="Tu nombre">
+            <mat-icon matPrefix>person</mat-icon>
+            @if (registroForm.get('nombre')?.hasError('required') &&
+                 registroForm.get('nombre')?.touched) {
+              <mat-error>El nombre es obligatorio</mat-error>
+            }
+            @if (registroForm.get('nombre')?.hasError('minlength') &&
+                 registroForm.get('nombre')?.touched) {
+              <mat-error>Mínimo 2 caracteres</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="field-half">
+            <mat-label>Apellido</mat-label>
+            <input matInput formControlName="apellido" placeholder="Tu apellido">
+            <mat-icon matPrefix>person_outline</mat-icon>
+            @if (registroForm.get('apellido')?.hasError('required') &&
+                 registroForm.get('apellido')?.touched) {
+              <mat-error>El apellido es obligatorio</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="field-full">
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput formControlName="email" placeholder="correo@ejemplo.com" type="email">
+          <mat-icon matPrefix>email</mat-icon>
+          @if (registroForm.get('email')?.hasError('required') &&
+               registroForm.get('email')?.touched) {
+            <mat-error>El correo es obligatorio</mat-error>
+          }
+          @if (registroForm.get('email')?.hasError('email') &&
+               registroForm.get('email')?.touched) {
+            <mat-error>Ingresa un correo válido</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Teléfono -->
+        <mat-form-field appearance="outline" class="field-full">
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="telefono" placeholder="+57 300 123 4567">
+          <mat-icon matPrefix>phone</mat-icon>
+          @if (registroForm.get('telefono')?.hasError('pattern') &&
+               registroForm.get('telefono')?.touched) {
+            <mat-error>Solo números (7-15 dígitos)</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Fecha de Nacimiento -->
+        <mat-form-field appearance="outline" class="field-full">
+          <mat-label>Fecha de Nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-icon matPrefix>cake</mat-icon>
+        </mat-form-field>
+
+        <!-- País -->
+        <mat-form-field appearance="outline" class="field-full">
+          <mat-label>País</mat-label>
+          <mat-select formControlName="pais">
+            <mat-option value="colombia">🇨🇴 Colombia</mat-option>
+            <mat-option value="mexico">🇲🇽 México</mat-option>
+            <mat-option value="argentina">🇦🇷 Argentina</mat-option>
+            <mat-option value="chile">🇨🇱 Chile</mat-option>
+            <mat-option value="peru">🇵🇪 Perú</mat-option>
+            <mat-option value="espana">🇪🇸 España</mat-option>
+            <mat-option value="otro">🌍 Otro</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>public</mat-icon>
+          @if (registroForm.get('pais')?.hasError('required') &&
+               registroForm.get('pais')?.touched) {
+            <mat-error>Selecciona un país</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="outline" class="field-full">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password"
+                 [type]="ocultarPassword ? 'password' : 'text'"
+                 placeholder="Mínimo 6 caracteres">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix type="button"
+                  (click)="ocultarPassword = !ocultarPassword">
+            <mat-icon>{{ocultarPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          @if (registroForm.get('password')?.hasError('required') &&
+               registroForm.get('password')?.touched) {
+            <mat-error>La contraseña es obligatoria</mat-error>
+          }
+          @if (registroForm.get('password')?.hasError('minlength') &&
+               registroForm.get('password')?.touched) {
+            <mat-error>Mínimo 6 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Confirmar Password -->
+        <mat-form-field appearance="outline" class="field-full">
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input matInput formControlName="confirmPassword"
+                 [type]="ocultarConfirmPassword ? 'password' : 'text'"
+                 placeholder="Repite tu contraseña">
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <button mat-icon-button matSuffix type="button"
+                  (click)="ocultarConfirmPassword = !ocultarConfirmPassword">
+            <mat-icon>{{ocultarConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          @if (registroForm.get('confirmPassword')?.touched && passwordsNoCoinciden()) {
+            <mat-error>Las contraseñas no coinciden</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Términos y Condiciones -->
+        <div class="terminos">
+          <mat-checkbox formControlName="aceptaTerminos" color="primary">
+            Acepto los <a href="#" (click)="$event.preventDefault()">Términos y Condiciones</a>
+            y la <a href="#" (click)="$event.preventDefault()">Política de Privacidad</a>
+          </mat-checkbox>
+          @if (registroForm.get('aceptaTerminos')?.hasError('requiredTrue') &&
+               registroForm.get('aceptaTerminos')?.touched) {
+            <p class="error-terminos">Debes aceptar los términos</p>
+          }
+        </div>
+
+        <!-- Botón de Registro -->
+        <div class="acciones">
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="registroForm.invalid"
+                  class="btn-registro">
+            <mat-icon>how_to_reg</mat-icon>
+            Registrarse
+          </button>
+
+          <button mat-stroked-button type="button" (click)="limpiar()" class="btn-limpiar">
+            <mat-icon>refresh</mat-icon>
+            Limpiar
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

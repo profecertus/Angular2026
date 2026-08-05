@@ -1,6 +1,92 @@
-.grid {
-    display: grid;
-    grid-template-columns:
-        repeat(auto-fill, minmax(280px, 1fr));
-        gap: 16px;
+.registro-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.registro-card {
+  width: 100%;
+  max-width: 560px;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important;
+}
+
+.avatar-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #667eea;
+}
+
+.registro-form {
+  padding-top: 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.field-half {
+  flex: 1;
+}
+
+.field-full {
+  width: 100%;
+}
+
+.terminos {
+  margin: 8px 0 16px;
+}
+
+.terminos a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.terminos a:hover {
+  text-decoration: underline;
+}
+
+.error-terminos {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.acciones {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.btn-registro {
+  padding: 0 32px;
+  font-size: 16px;
+  height: 48px;
+  border-radius: 24px !important;
+}
+
+.btn-limpiar {
+  height: 48px;
+  border-radius: 24px !important;
+}
+
+mat-divider {
+  margin: 16px 0;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .registro-container {
+    padding: 8px;
+  }
 }
