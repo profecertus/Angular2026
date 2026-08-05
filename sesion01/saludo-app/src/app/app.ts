@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { LibroService } from '../shared/libro.service';
+import { Micomponente } from '../components/micomponente/micomponente';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule],
+  imports: [CommonModule, Micomponente],
   templateUrl: './app.html'
 })
 export class App {
