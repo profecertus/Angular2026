@@ -1,1 +1,13 @@
-<app-libro-form></app-libro-form>
+<!--app-libro-form [titulo]="'CAFE'" (seleccionar)="ver($event)" ></app-libro-form>
+<app-libro-form [titulo]="'LECHE'" (seleccionar)="ver($event)" ></app-libro-form>
+<app-libro-form [titulo]="'PAN'" (seleccionar)="ver($event)" ></app-libro-form>
+<hr>
+<p>{{ 'PRODUCTO SELECCIONADO:' + segnalSalida() }}</p-->
+
+<app-alerta>
+    <h3 card-actions>Pie Pagina</h3>
+    <h3 card-title>Hola</h3>
+    <strong>!Atencion</strong>Esto es un mensaje proyectado con ng-content
+</app-alerta>
+
+<app-badge></app-badge>

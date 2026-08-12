@@ -1,0 +1,7 @@
+:host{
+    padding: 4px 8 px;
+}
+
+:host(.activo){
+    color:green
+}
