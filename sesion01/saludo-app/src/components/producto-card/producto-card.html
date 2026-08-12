@@ -1,0 +1,30 @@
+<mat-card class="tarjeta-producto" appearance="outlined">
+    <div class="portada">{{ producto().emoji }}</div>
+
+    <mat-card-header>
+        <mat-card-title>{{ producto().nombre }}</mat-card-title>
+        <mat-card-subtitle class="precio">
+            {{ producto().precio | currency:'$':'symbol':'1.2-2'}}
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <p class="descripcion">{{ producto().descripcion}}</p>
+    </mat-card-content>
+
+    <mat-card-actions class="acciones">
+        @if (enCarrito() > 0){
+            <span class="en-carrito">
+                <mat-icon inline>
+                    check_circle
+                </mat-icon>
+                {{ enCarrito() }} en el carrito
+            </span>
+        }
+
+        <button matButton="filled" (click)="onAgregar()">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Agregar
+        </button>
+    </mat-card-actions>
+</mat-card>

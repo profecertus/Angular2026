@@ -1,0 +1,44 @@
+.tarjeta-producto{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.portada{
+    font-size: 3.5rem;
+    line-height: 1;
+    text-align: center;
+    padding: 1.25rem 0 0.5rem;
+    user-select: none;
+}
+
+.precio{
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.descripcion{
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+mat-card-content{
+    flex: 1;
+}
+
+.acciones{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: space-between;
+    padding: 0.5rem 1rem 1rem;
+}
+
+.en-carrito{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    opacity: 0.75;
+}
