@@ -9,12 +9,14 @@ import { ProductoCard } from '../components/producto-card/producto-card';
 import { Carrito } from '../components/carrito/carrito';
 import { environment } from '../environments/environment';
 import { Producto } from '../models/producto.model/producto.model';
+import { ProductoService } from '../shared/producto.service';
+import { CarritoService } from '../shared/carrito.service';
 
 @Component({
   selector: 'app-root',
   imports: [
-    MatToolbarModule, 
-    MatButtonModule, 
+    MatToolbarModule,
+    MatButtonModule,
     MatIconModule,
     MatBadgeModule,
     MatProgressSpinnerModule,
@@ -25,14 +27,14 @@ import { Producto } from '../models/producto.model/producto.model';
 })
 export class App {
   private productoSrv = inject(ProductoService);
-  
+
   readonly carrito = inject(CarritoService);
 
   readonly env = environment;
 
   readonly productos = toSignal<Producto[]>(this.productoSrv.listar());
 
-  onAgregar(producto:Producto):void{
+  onAgregar(producto: Producto): void {
     this.carrito.agregar(producto);
   }
 }

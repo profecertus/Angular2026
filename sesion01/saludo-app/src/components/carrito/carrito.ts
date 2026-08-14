@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { CarritoService } from '../../shared/carrito.service';
 
 @Component({
   selector: 'app-carrito',
@@ -20,5 +21,5 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './carrito.css',
 })
 export class Carrito {
-  //readonly carrito = inject(CarritoService);
+  readonly carrito = inject(CarritoService);
 }

@@ -1,13 +1,30 @@
-<!--app-libro-form [titulo]="'CAFE'" (seleccionar)="ver($event)" ></app-libro-form>
-<app-libro-form [titulo]="'LECHE'" (seleccionar)="ver($event)" ></app-libro-form>
-<app-libro-form [titulo]="'PAN'" (seleccionar)="ver($event)" ></app-libro-form>
-<hr>
-<p>{{ 'PRODUCTO SELECCIONADO:' + segnalSalida() }}</p-->
+<mat-toolbar color="primary">
+  <span>🛒 Tienda</span>
+  <span style="flex: 1"></span>
+  <button mat-icon-button [matBadge]="carrito.totalItems()" matBadgeColor="warn"
+          [matBadgeHidden]="carrito.totalItems() === 0">
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+</mat-toolbar>
 
-<app-alerta>
-    <h3 card-actions>Pie Pagina</h3>
-    <h3 card-title>Hola</h3>
-    <strong>!Atencion</strong>Esto es un mensaje proyectado con ng-content
-</app-alerta>
+<div class="contenedor">
+  @if (!productos()) {
+    <div class="cargando">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  } @else {
+    <div class="grid-productos">
+      @for (producto of productos(); track producto.id) {
+        <app-producto-card
+          [producto]="producto"
+          [enCarrito]="carrito.cantidadDeProducto(producto.id)"
+          (agregar)="onAgregar($event)">
+        </app-producto-card>
+      }
+    </div>
+  }
 
-<app-badge></app-badge>
+  @if (carrito.totalItems() > 0) {
+    <app-carrito></app-carrito>
+  }
+</div>

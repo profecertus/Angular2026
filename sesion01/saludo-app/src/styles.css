@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+.contenedor {
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.carrito-card {
+  margin-top: 2rem;
+}
+
+.total {
+  font-size: 1.1rem;
+  margin-right: 1rem;
+}
