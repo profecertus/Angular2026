@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Va
 import { dniValidator } from '../validators/dni.validators';
 import { passwordMatchValidator } from '../validators/passwords-match.validator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inscripcion',
@@ -105,11 +106,22 @@ export class Inscripcion {
     if(this.form.invalid){
       this.form.markAllAsTouched();
       this.guardado.set('');
+      Swal.fire({
+        icon:'error',
+        title:'Formulario invalido',
+        text:'Revisa los campos marcados en rojo'
+      });
       return;
     }
 
     const dto = this.form.getRawValue();
     this.guardado.set(`Inscripción Registrada para "${dto.nombre}"`)
+    Swal.fire({
+      icon:'success',
+      title:'Grabado correcto',
+      text: 'Inscripcion registrada',
+      confirmButtonText: 'Aceptar'
+    });
   }
 
   limpiar():void{

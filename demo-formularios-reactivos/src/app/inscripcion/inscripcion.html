@@ -121,7 +121,7 @@
         } @empty {
             <p class="muted">Sin acompañantes. Agregar uno con el boton de abajo</p>
         }
-        <button type="button" class="btn-ghost" (click)="agregarAcompanante()">+ Agregar acompañantes</button>
+        <button type="button" class="btn ghost" (click)="agregarAcompanante()">+ Agregar acompañantes</button>
     </fieldset>
 
     <div class="actions">
@@ -130,3 +130,15 @@
         <button type="submit" class="btn primary" [disabled]="form.invalid">Guardar</button>
     </div>
 </form>
+
+<section class="panel">
+    <h3>5. FormControl Simple</h3>
+    <p class="muted">Un control fuera del grupo</p>
+    <div class="field">
+        <label for="cupon">Cupon (formato ABC-a23)</label>
+        <input type="text" id="cupon" [formControl]="cupon"/>
+        @if(cupon.touched && cupon.hasError('pattern')){
+            <small class="err">Formato invalido. Debe ser 3 letras mayusculas, guion y 3 digitos</small>
+        }
+    </div>
+</section>
