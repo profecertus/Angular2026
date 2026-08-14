@@ -1,4 +1,4 @@
-<form [formGroup]="form"  class="form">
+<form [formGroup]="form"  class="form" (ngSubmit)="guardar()">
     <fieldset>
         <legend>1. Datos personales - FormBuilder + vlaidatores built-in</legend>
 
@@ -123,4 +123,10 @@
         }
         <button type="button" class="btn-ghost" (click)="agregarAcompanante()">+ Agregar acompañantes</button>
     </fieldset>
+
+    <div class="actions">
+        <button type="button" class="btn ghost">Cargar Demo</button>
+        <button type="button" class="btn ghost" (click)="limpiar()">Reset</button>
+        <button type="submit" class="btn primary" [disabled]="form.invalid">Guardar</button>
+    </div>
 </form>

@@ -98,4 +98,23 @@ export class Inscripcion {
   quitarAcompanantes(i: number):void{
     this.acompanantes.removeAt(i);
   }
+
+  guardado = signal<string>('');
+
+  guardar():void{
+    if(this.form.invalid){
+      this.form.markAllAsTouched();
+      this.guardado.set('');
+      return;
+    }
+
+    const dto = this.form.getRawValue();
+    this.guardado.set(`Inscripción Registrada para "${dto.nombre}"`)
+  }
+
+  limpiar():void{
+    this.form.reset({tipoParticipante: 'asistente'});
+    this.acompanantes.clear();
+    this.form.removeControl('tema');
+  }
 }
