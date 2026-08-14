@@ -78,4 +78,49 @@
         </div>
         
     </fieldset>
+
+    <fieldset>
+        <legend>3. Tipo de participante - Formulario Dinamico</legend>
+        <div class="field">
+            <label for="tipo">Participas como</label>
+            <select name="tipo" id="tipo" formControlName="tipoParticipante" (change)="onTipoChange()">
+                <option value="asistente">Asistente</option>
+                <option value="ponente">Ponente</option>
+            </select>
+        </div>
+
+        @if (form.get('tema')){
+            <div class="field">
+                <label for="tema">Tema de la Ponencia</label>
+                <input type="text" id="tema" formControlName="tema"/>
+                @if(form.get('tema')?.touched && form.get('tema')?.hasError('required')){
+                    <small class="err">El tema es obligatorio para ponentes</small>
+                }
+                @if(form.get('tema')?.hasError('minlength')){
+                    <small class="err">Mínimo 5 carácteres</small>
+                }
+            </div>
+        }
+    </fieldset>
+
+    <fieldset formArrayName="acompanantes">
+        <legend>4. Acompañantes</legend>
+
+        @for (grupo of acompanantes.controls; track $index){
+            <div class="row" [formGroupName]="$index">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" formControlName="nombre" />
+                </div>
+                <div class="field">
+                    <label>Edad</label>
+                    <input type="number" formControlName="edad" />
+                </div>
+                <button type="button" class="btn-icon" (click)="quitarAcompanantes($index)">x</button>
+            </div>
+        } @empty {
+            <p class="muted">Sin acompañantes. Agregar uno con el boton de abajo</p>
+        }
+        <button type="button" class="btn-ghost" (click)="agregarAcompanante()">+ Agregar acompañantes</button>
+    </fieldset>
 </form>

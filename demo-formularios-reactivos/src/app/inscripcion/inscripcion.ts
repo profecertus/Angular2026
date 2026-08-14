@@ -71,4 +71,31 @@ export class Inscripcion {
     const email = this.form.get('email');
     email?.enabled ? email.disable(): email?.enable();
   }
+
+  onTipoChange():void{
+    const esPonente = this.form.get('tipoParticipante')?.value === 'ponente';
+    if(esPonente && !this.form.get('tema')){
+      this.form.addControl(
+        'tema',
+        this.fb.control('', [Validators.required, Validators.minLength(5)])
+      );
+    }else if (!esPonente && this.form.get('tema')){
+      this.form.removeControl('tema');
+    }
+  }
+
+  private nuevoAcompanante(nombre='', edad:number | null = null):FormGroup{
+    return this.fb.group({
+      nombre: [nombre, [Validators.required, Validators.minLength(3)]],
+      edad:[edad, [Validators.required, Validators.min(0)]],
+    });
+  }
+
+  agregarAcompanante():void{
+    this.acompanantes.push(this.nuevoAcompanante());
+  }
+
+  quitarAcompanantes(i: number):void{
+    this.acompanantes.removeAt(i);
+  }
 }
