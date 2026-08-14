@@ -1,0 +1,81 @@
+<form [formGroup]="form"  class="form">
+    <fieldset>
+        <legend>1. Datos personales - FormBuilder + vlaidatores built-in</legend>
+
+        <div class="field">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" formControlName="nombre" />
+            @if (tieneError('nombre', 'required')){
+                <small class="err">El nombre es obligatorio</small>
+            }
+
+            @if(tieneError('nombre','minlength')){
+                <small class="err">Mínimo 3 caracteres</small>
+            }
+
+            @if(tieneError('nombre','maxlength')){
+                <small class="err">Maximo 60 caracteres</small>
+            }
+        </div>
+
+        <div class="field">
+            <label for="email">Email
+                <button type="button" class="link" (click)="toggleEmail()">enable/disable</button>
+            </label>
+            <input type="email" id="email" formControlName="email" />
+            @if(tieneError('email', 'required')){
+                <small class="err">El email es obligatorio</small>
+            }
+            @if(tieneError('email', 'email')){
+                <small class="err">Formato de email invalido</small>
+            }
+        </div>
+
+
+        <div class="field">
+            <label for="edad">Edad</label>
+            <input type="number" id="edad" formControlName="edad" />
+            @if(tieneError('edad', 'required')){
+                <small class="err">La edad es obligatorio</small>
+            }
+            @if(tieneError('edad', 'min')){
+                <small class="err">Debe ser mayor de 18 años</small>
+            }
+            @if(tieneError('edad', 'max')){
+                <small class="err">Edad Maxima 99</small>
+            }
+        </div>
+
+        <div class="field">
+            <label for="dni">DNI</label>
+            <input type="number" id="dni" formControlName="dni" />
+            @if(tieneError('dni', 'required')){
+                <small class="err">El DNI es obligatorio</small>
+            }
+            @if(tieneError('dni', 'dni')){
+                <small class="err">{{ form.get('dni')?.getError('dni').mensaje }}</small>
+            }            
+        </div>
+    </fieldset>
+
+    <fieldset formGroupName="credenciales">
+        <legend>2. Credenciales -validador de grupo</legend>
+
+        <div class="field">
+            <label for="clave">Contraseña</label>
+            <input type="password" id="clave" formControlName="clave">
+            @if(credenciales.get('clave')?.touched && credenciales.get('clave')?.hasError('minlength')){
+                <small class="err">Minimo 8 caracteres</small>
+            }
+        </div>
+
+        <div class="field">
+            <label for="confirmar">Confirmar contraseña</label>
+            <input type="password" id="confirmar" formControlName="confirmar">
+            @if(credenciales.touched && credenciales.hasError('passwordMismatch')){
+                <small class="err">Las contraseñas no coinciden</small>
+            }
+        </div>
+        
+    </fieldset>
+</form>
