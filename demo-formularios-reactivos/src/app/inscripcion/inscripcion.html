@@ -22,16 +22,13 @@
             <label for="email">Email
                 <button type="button" class="link" (click)="toggleEmail()">enable/disable</button>
             </label>
-            <input type="email" id="email" formControlName="email" />
-            @if(tieneError('email', 'required')){
-                <small class="err">El email es obligatorio</small>
-            }                        
-            @if(tieneError('email', 'sinEspacios')){
-                <small>El email no puede contener espacios</small>
+            <input type="email" id="email" formControlName="email" />            
+            @if(emailCtrl.pending){
+                <small class="muted">Verificando disponibilidad...</small>
             }
-            @if(tieneError('email', 'email')){
-                <small class="err">Formato de email invalido</small>
-            }            
+            @if(tieneError('email', 'emailRegistrado')){
+                <small class="err">{{ emailCtrl.getError('emailRegistrado').mensaje }}</small>
+            }
         </div>
 
 

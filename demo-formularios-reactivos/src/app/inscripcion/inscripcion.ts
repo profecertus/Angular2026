@@ -1,10 +1,11 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { dniValidator } from '../validators/dni.validators';
 import { passwordMatchValidator } from '../validators/passwords-match.validator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { sinEspacios } from '../validators/sin-espacios.validators';
 import Swal from 'sweetalert2';
+import { emailDisponibleValidator } from '../validators/email-disponible.validator';
 
 @Component({
   selector: 'app-inscripcion',
@@ -22,7 +23,10 @@ export class Inscripcion {
 
   form: FormGroup = this.fb.group({
     nombre:['', [Validators.required, Validators.minLength(3), Validators.maxLength(60)]],
-    email: ['', [Validators.required, Validators.email, sinEspacios]],
+    email: ['', {
+      validators: [Validators.required, Validators.email, sinEspacios],
+      asyncValidators: [emailDisponibleValidator()],
+    }],
     edad: [null as number | null, [Validators.required, Validators.min(18), Validators.max(99)]],
     dni: ['', [Validators.required, dniValidator()]],
     tipoParticipante:['asistente', Validators.required],
@@ -35,6 +39,10 @@ export class Inscripcion {
     ),
     acompanantes: this.fb.array<FormGroup>([]),
   });
+
+  get emailCtrl():AbstractControl{
+    return this.form.get('email')!;
+  }
 
   get credenciales():FormGroup{
     return this.form.get('credenciales') as FormGroup;
