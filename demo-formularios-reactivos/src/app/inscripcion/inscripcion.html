@@ -25,10 +25,13 @@
             <input type="email" id="email" formControlName="email" />
             @if(tieneError('email', 'required')){
                 <small class="err">El email es obligatorio</small>
+            }                        
+            @if(tieneError('email', 'sinEspacios')){
+                <small>El email no puede contener espacios</small>
             }
             @if(tieneError('email', 'email')){
                 <small class="err">Formato de email invalido</small>
-            }
+            }            
         </div>
 
 

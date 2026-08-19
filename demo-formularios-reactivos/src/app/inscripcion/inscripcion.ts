@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Va
 import { dniValidator } from '../validators/dni.validators';
 import { passwordMatchValidator } from '../validators/passwords-match.validator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { sinEspacios } from '../validators/sin-espacios.validators';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,7 +22,7 @@ export class Inscripcion {
 
   form: FormGroup = this.fb.group({
     nombre:['', [Validators.required, Validators.minLength(3), Validators.maxLength(60)]],
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.email, sinEspacios]],
     edad: [null as number | null, [Validators.required, Validators.min(18), Validators.max(99)]],
     dni: ['', [Validators.required, dniValidator()]],
     tipoParticipante:['asistente', Validators.required],
