@@ -15,6 +15,18 @@ import { emailDisponibleValidator } from '../validators/email-disponible.validat
 })
 export class Inscripcion {
   private fb = inject(FormBuilder);
+  readonly pasos: { titulo: string, controles: string[]}[] = [
+    {titulo: 'Datos Personales', controles: ['nombre', 'email', 'edad', 'dni']},
+    {titulo: 'Credenciales', controles: ['credenciales']},
+    {titulo: 'Participacion', controles: ['tipoParticipante', 'tema']},
+    {titulo: 'Acompañantes', controles: ['acompanantes']},
+    {titulo: 'Resumen', controles:[]}
+  ];
+
+  pasoActual = signal(0);
+  esPrimerPaso = computed(() => this.pasoActual() === 0);
+  esUltimoPaso = computed(()=> this.pasoActual() === this.pasos.length - 1);
+  progreso = computed(()=> ((this.pasoActual() + 1)/this.pasoActual.length) * 100);
 
   cupon = new FormControl('',{
     nonNullable: true,
@@ -71,6 +83,80 @@ export class Inscripcion {
         .pipe(takeUntilDestroyed())
         .subscribe((s) => this.estadoForm.set(s));
   }
+
+  //----Metodos Multi-Step----
+
+  onSubmit():void{
+    if(this.esUltimoPaso()){
+      this.guardar();
+    }else{
+      this.siguiente();
+    }
+  }
+
+  private controlesDelPaso(indice:number):AbstractControl[]{
+    return this.pasos[indice].controles
+      .map((clave) => this.form.get(clave))
+      .filter((c): c is AbstractControl => c != null);
+  }
+
+  pasoValido(indice:number):boolean{
+    return this.controlesDelPaso(indice).every((c) => c.valid);
+  }
+
+  pasoPendiente(indice:number):boolean{
+    return this.controlesDelPaso(indice).some((c) => c.pending);
+  }
+
+  siguiente():void{
+    const i = this.pasoActual();
+
+    if(this.pasoPendiente(i)){
+      Swal.fire({
+        icon:'info',
+        title: 'Validando...',
+        text:'Espera a que termine la verificación del email',
+      });
+      return;
+    }
+
+    if(!this.pasoValido(i)){
+      this.controlesDelPaso(i).forEach((c) => c.markAllAsTouched());
+      Swal.fire({
+        icon:'error',
+        title: 'Paso incompleto',
+        text: 'Corrije los campos marcados antes de continuar',
+      });
+      return;
+    }
+
+    if(!this.esUltimoPaso()){
+      this.pasoActual.set(i + 1);
+    }
+  }
+
+  anterior():void{
+    if(!this.esPrimerPaso()){
+      this.pasoActual.update((p) => p - 1);
+    }
+  }
+
+  irAPaso(destino: number):void{
+    if(destino <= this.pasoActual()){
+      this.pasoActual.set(destino);
+      return;      
+    }
+    for(let i = this.pasoActual(); i < destino; i++){
+      if(!this.pasoValido(i)){
+        this.controlesDelPaso(i).forEach((c) => c.markAllAsTouched());
+        this.pasoActual.set(i);
+        return;
+      }
+    }
+    this.pasoActual.set(destino);
+  }
+
+  //------------------------------
 
   tieneError(ruta:string, error:string): boolean{
     const c = this.form.get(ruta);

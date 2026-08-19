@@ -183,3 +183,125 @@ details summary {
   color: var(--primary);
   font-size: 0.88rem;
 }
+
+/* ============================================================
+   WIZARD MULTI-STEP: stepper, barra de progreso y navegación
+   ============================================================ */
+ 
+.stepper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+ 
+.step {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem 0.35rem 0.35rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+ 
+.step:hover {
+  border-color: var(--primary);
+}
+ 
+.step-num {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+ 
+.step.activa {
+  border-color: var(--primary);
+  color: var(--text);
+}
+ 
+.step.activa .step-num {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+ 
+.step.completa {
+  border-color: var(--ok);
+  color: var(--text);
+}
+ 
+.step.completa .step-num {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: white;
+}
+ 
+/* En pantallas chicas dejamos sólo el número para que el stepper no crezca */
+@media (max-width: 560px) {
+  .step-txt {
+    display: none;
+  }
+  .step {
+    padding: 0.35rem;
+  }
+}
+ 
+.progress {
+  height: 6px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+ 
+.progress-bar {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.25s ease;
+}
+ 
+.paso-info {
+  margin: 0.5rem 0 1rem;
+}
+ 
+/* Empuja los botones de utilidades (demo/reset) al extremo derecho */
+.sep {
+  flex: 1 1 auto;
+}
+ 
+.resumen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+.resumen li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 0.9rem;
+}
+ 
+.resumen li:last-child {
+  border-bottom: none;
+}
+ 
+.resumen span {
+  color: var(--muted);
+}
+ 
+ 

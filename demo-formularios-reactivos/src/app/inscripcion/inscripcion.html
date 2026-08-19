@@ -1,128 +1,154 @@
-<form [formGroup]="form"  class="form" (ngSubmit)="guardar()">
-    <fieldset>
-        <legend>1. Datos personales - FormBuilder + vlaidatores built-in</legend>
+<form [formGroup]="form"  class="form" (ngSubmit)="onSubmit()">
+    <nav class="stepper" aria-label="Progreso del formulario">
+        @for ( paso of pasos; track $index ){
+            <button
+                type="button"
+                class="step"
+                [class.activa]="pasoActual() === $index"
+                [class.completa]="$index < pasoActual() && pasoValido($index)"
+                [attr.aria-current]="pasoActual() === $index ? 'step': null"
+                (click)="irAPaso($index)"
+            >
+                <span class="step-num">
+                    
+                </span>
+                <span class="step-txt">{{ paso.titulo }}</span>
+            </button>
+        }
+    </nav>
 
-        <div class="field">
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" formControlName="nombre" />
-            @if (tieneError('nombre', 'required')){
-                <small class="err">El nombre es obligatorio</small>
-            }
+    @if (pasoActual() === 0){
+        <fieldset>
+            <legend>1. Datos personales - FormBuilder + vlaidatores built-in</legend>
 
-            @if(tieneError('nombre','minlength')){
-                <small class="err">Mínimo 3 caracteres</small>
-            }
-
-            @if(tieneError('nombre','maxlength')){
-                <small class="err">Maximo 60 caracteres</small>
-            }
-        </div>
-
-        <div class="field">
-            <label for="email">Email
-                <button type="button" class="link" (click)="toggleEmail()">enable/disable</button>
-            </label>
-            <input type="email" id="email" formControlName="email" />            
-            @if(emailCtrl.pending){
-                <small class="muted">Verificando disponibilidad...</small>
-            }
-            @if(tieneError('email', 'emailRegistrado')){
-                <small class="err">{{ emailCtrl.getError('emailRegistrado').mensaje }}</small>
-            }
-        </div>
-
-
-        <div class="field">
-            <label for="edad">Edad</label>
-            <input type="number" id="edad" formControlName="edad" />
-            @if(tieneError('edad', 'required')){
-                <small class="err">La edad es obligatorio</small>
-            }
-            @if(tieneError('edad', 'min')){
-                <small class="err">Debe ser mayor de 18 años</small>
-            }
-            @if(tieneError('edad', 'max')){
-                <small class="err">Edad Maxima 99</small>
-            }
-        </div>
-
-        <div class="field">
-            <label for="dni">DNI</label>
-            <input type="number" id="dni" formControlName="dni" />
-            @if(tieneError('dni', 'required')){
-                <small class="err">El DNI es obligatorio</small>
-            }
-            @if(tieneError('dni', 'dni')){
-                <small class="err">{{ form.get('dni')?.getError('dni').mensaje }}</small>
-            }            
-        </div>
-    </fieldset>
-
-    <fieldset formGroupName="credenciales">
-        <legend>2. Credenciales -validador de grupo</legend>
-
-        <div class="field">
-            <label for="clave">Contraseña</label>
-            <input type="password" id="clave" formControlName="clave">
-            @if(credenciales.get('clave')?.touched && credenciales.get('clave')?.hasError('minlength')){
-                <small class="err">Minimo 8 caracteres</small>
-            }
-        </div>
-
-        <div class="field">
-            <label for="confirmar">Confirmar contraseña</label>
-            <input type="password" id="confirmar" formControlName="confirmar">
-            @if(credenciales.touched && credenciales.hasError('passwordMismatch')){
-                <small class="err">Las contraseñas no coinciden</small>
-            }
-        </div>
-        
-    </fieldset>
-
-    <fieldset>
-        <legend>3. Tipo de participante - Formulario Dinamico</legend>
-        <div class="field">
-            <label for="tipo">Participas como</label>
-            <select name="tipo" id="tipo" formControlName="tipoParticipante" (change)="onTipoChange()">
-                <option value="asistente">Asistente</option>
-                <option value="ponente">Ponente</option>
-            </select>
-        </div>
-
-        @if (form.get('tema')){
             <div class="field">
-                <label for="tema">Tema de la Ponencia</label>
-                <input type="text" id="tema" formControlName="tema"/>
-                @if(form.get('tema')?.touched && form.get('tema')?.hasError('required')){
-                    <small class="err">El tema es obligatorio para ponentes</small>
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" formControlName="nombre" />
+                @if (tieneError('nombre', 'required')){
+                    <small class="err">El nombre es obligatorio</small>
                 }
-                @if(form.get('tema')?.hasError('minlength')){
-                    <small class="err">Mínimo 5 carácteres</small>
+
+                @if(tieneError('nombre','minlength')){
+                    <small class="err">Mínimo 3 caracteres</small>
+                }
+
+                @if(tieneError('nombre','maxlength')){
+                    <small class="err">Maximo 60 caracteres</small>
                 }
             </div>
-        }
-    </fieldset>
 
-    <fieldset formArrayName="acompanantes">
-        <legend>4. Acompañantes</legend>
-
-        @for (grupo of acompanantes.controls; track $index){
-            <div class="row" [formGroupName]="$index">
-                <div class="field">
-                    <label>Nombre</label>
-                    <input type="text" formControlName="nombre" />
-                </div>
-                <div class="field">
-                    <label>Edad</label>
-                    <input type="number" formControlName="edad" />
-                </div>
-                <button type="button" class="btn-icon" (click)="quitarAcompanantes($index)">x</button>
+            <div class="field">
+                <label for="email">Email
+                    <button type="button" class="link" (click)="toggleEmail()">enable/disable</button>
+                </label>
+                <input type="email" id="email" formControlName="email" />            
+                @if(emailCtrl.pending){
+                    <small class="muted">Verificando disponibilidad...</small>
+                }
+                @if(tieneError('email', 'emailRegistrado')){
+                    <small class="err">{{ emailCtrl.getError('emailRegistrado').mensaje }}</small>
+                }
             </div>
-        } @empty {
-            <p class="muted">Sin acompañantes. Agregar uno con el boton de abajo</p>
-        }
-        <button type="button" class="btn ghost" (click)="agregarAcompanante()">+ Agregar acompañantes</button>
-    </fieldset>
+
+
+            <div class="field">
+                <label for="edad">Edad</label>
+                <input type="number" id="edad" formControlName="edad" />
+                @if(tieneError('edad', 'required')){
+                    <small class="err">La edad es obligatorio</small>
+                }
+                @if(tieneError('edad', 'min')){
+                    <small class="err">Debe ser mayor de 18 años</small>
+                }
+                @if(tieneError('edad', 'max')){
+                    <small class="err">Edad Maxima 99</small>
+                }
+            </div>
+
+            <div class="field">
+                <label for="dni">DNI</label>
+                <input type="number" id="dni" formControlName="dni" />
+                @if(tieneError('dni', 'required')){
+                    <small class="err">El DNI es obligatorio</small>
+                }
+                @if(tieneError('dni', 'dni')){
+                    <small class="err">{{ form.get('dni')?.getError('dni').mensaje }}</small>
+                }            
+            </div>
+        </fieldset>
+    }
+
+    @if (pasoActual() === 1){
+        <fieldset formGroupName="credenciales">
+            <legend>2. Credenciales -validador de grupo</legend>
+
+            <div class="field">
+                <label for="clave">Contraseña</label>
+                <input type="password" id="clave" formControlName="clave">
+                @if(credenciales.get('clave')?.touched && credenciales.get('clave')?.hasError('minlength')){
+                    <small class="err">Minimo 8 caracteres</small>
+                }
+            </div>
+
+            <div class="field">
+                <label for="confirmar">Confirmar contraseña</label>
+                <input type="password" id="confirmar" formControlName="confirmar">
+                @if(credenciales.touched && credenciales.hasError('passwordMismatch')){
+                    <small class="err">Las contraseñas no coinciden</small>
+                }
+            </div>
+            
+        </fieldset>
+    }    
+
+    @if (pasoActual() === 2){
+        <fieldset>
+            <legend>3. Tipo de participante - Formulario Dinamico</legend>
+            <div class="field">
+                <label for="tipo">Participas como</label>
+                <select name="tipo" id="tipo" formControlName="tipoParticipante" (change)="onTipoChange()">
+                    <option value="asistente">Asistente</option>
+                    <option value="ponente">Ponente</option>
+                </select>
+            </div>
+
+            @if (form.get('tema')){
+                <div class="field">
+                    <label for="tema">Tema de la Ponencia</label>
+                    <input type="text" id="tema" formControlName="tema"/>
+                    @if(form.get('tema')?.touched && form.get('tema')?.hasError('required')){
+                        <small class="err">El tema es obligatorio para ponentes</small>
+                    }
+                    @if(form.get('tema')?.hasError('minlength')){
+                        <small class="err">Mínimo 5 carácteres</small>
+                    }
+                </div>
+            }
+        </fieldset>
+    }
+    
+    @if (pasoActual() === 3){
+        <fieldset formArrayName="acompanantes">
+            <legend>4. Acompañantes</legend>
+
+            @for (grupo of acompanantes.controls; track $index){
+                <div class="row" [formGroupName]="$index">
+                    <div class="field">
+                        <label>Nombre</label>
+                        <input type="text" formControlName="nombre" />
+                    </div>
+                    <div class="field">
+                        <label>Edad</label>
+                        <input type="number" formControlName="edad" />
+                    </div>
+                    <button type="button" class="btn-icon" (click)="quitarAcompanantes($index)">x</button>
+                </div>
+            } @empty {
+                <p class="muted">Sin acompañantes. Agregar uno con el boton de abajo</p>
+            }
+            <button type="button" class="btn ghost" (click)="agregarAcompanante()">+ Agregar acompañantes</button>
+        </fieldset>
+    }    
 
     <div class="actions">
         <button type="button" class="btn ghost">Cargar Demo</button>
