@@ -24,7 +24,7 @@ export function emailDisponibleValidator(
         if(valor === ''){
             return of(null);
         }
-        
+
 
         return timer(debounceMs).pipe(
             switchMap(()=> emailService.validar(valor)),
@@ -37,7 +37,11 @@ export function emailDisponibleValidator(
                 }
                 : null
             ),
-            catchError(() => of(null))
+            catchError((e) => of({
+                emailRegistrado:{
+                    mensaje: e.mensaje || 'No se pudo verificar el email. Intente más tarde.'
+                }
+            }))
         );
     }
 }
