@@ -1,0 +1,66 @@
+/* Toolbar: separa el título de los botones de la derecha */
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+ 
+.barra .titulo {
+  margin-left: 8px;
+  font-size: 1.1rem;
+}
+ 
+/* El spacer empuja los íconos hacia la derecha del toolbar */
+.spacer {
+  flex: 1 1 auto;
+}
+ 
+.contenedor {
+  max-width: 900px;
+  margin: 16px auto;
+  padding: 0 16px 96px; /* padding-bottom para no tapar con el FAB */
+}
+ 
+.seccion {
+  margin-top: 28px;
+  border-bottom: 2px solid var(--mat-sys-primary, #1976d2);
+  padding-bottom: 4px;
+}
+ 
+.info-card {
+  margin: 12px 0;
+}
+ 
+code {
+  background: #232f3e;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+ 
+.feature {
+  color: #1a7f37;
+  font-weight: 600;
+}
+ 
+/* Grilla responsiva de cards */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 12px 0;
+}
+ 
+.libro-card.nuevo {
+  border-left: 4px solid #1a7f37;
+}
+ 
+/* RETO 1: botón flotante fijo abajo a la derecha */
+.fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+}
+ 
+ 

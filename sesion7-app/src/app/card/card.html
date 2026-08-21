@@ -1,0 +1,16 @@
+<div class="card">
+    <header class="card_header" (click)="toggle()">
+        <ng-content select="[c-title]"></ng-content>
+        <span class="card__chevron">{{ expandido() ? '▾' : '▸' }}</span>
+    </header>
+
+    @if(expandido()){
+        <section class="card_body">
+            <ng-content></ng-content>
+        </section>
+    }
+
+    <footer class="card_footer">
+        <ng-content select="[c-actions]"></ng-content>
+    </footer>
+</div>

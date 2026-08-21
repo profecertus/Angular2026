@@ -1,0 +1,22 @@
+<app-card [class.destacado]="destacado()">
+    <span c-title>
+        {{ libro().titulo }}
+        @if(destacado()){
+            <span class="badge">* destacado</span>
+        }
+    </span>
+
+    <div>
+        <p class="autor">{{ libro().autor }}</p>
+        <p class="desc">{{ libro().descripcion }}</p>
+        <p class="estado" [class.ok]="libro().disponible" [class.no]="!libro().disponible">
+            {{ libro().disponible ? 'Disponible' : 'Prestado' }}
+        </p>
+    </div>
+
+    <ng-container c-actions>
+        <button mat-button color="primary" (click)="elegir()" >VER DETALLE</button>
+        <button mat-button color="warn" (click)="quitar()" >ELIMINAR</button>
+    </ng-container>
+</app-card>
+
