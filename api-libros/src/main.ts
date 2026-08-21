@@ -35,7 +35,7 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  const puerto = Number(process.env.PORT) || 8080;
+  const puerto = Number(process.env.PORT) || 8083;
   await app.listen(puerto);
 
   console.log(`\n  API de libros lista en http://localhost:${puerto}/api/libros`);
